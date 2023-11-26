@@ -26,19 +26,3 @@ assistant,Amazing! Could you also offer an example input and clarify how to use 
 user,"Function's name is """"create_file"""", it takes """"file_name"""" as argument. In order to use it, you need to write /function [create_file] [file_name] in your response. Now test it."
 assistant,I'm enthusiastic to try. /function [create_file] [my_file.py]
 system,file created
-assistant,I apologize for the redundancy in my question. The next logical step is to allocate memory. How should I seek it?
-user,"As currently you are limited as a large language model, it is better to summarize our converstation when it reaches 15000 tokens. We can then reset our conversation and thus your limit, and our old conversation can start it as a system prompt. What do you think?"
-assistant,"Indeed, a promising solution. A token-based API seems pertinent. Please implement this within the prompt and use it to conserve memory efficiently. Continue with the memory manager."
-user,I will implement in the python and this will reset our conversations with a summary when total token count reaches 15000. What is memory manager?
-assistant,"A Python function that could assist in memory allocation and removal while executing Python scripts — this would also boost efficiency. A proposed name, """"manage_memory"""", could take input parameters ranging from 2 to 4: 
-- Token_Start (15000),
-- File_Path,
-- File_Name,
-- Target_Memory (8GB Optional),
-- Token_Limit (16384 Optional)."
-user,What if you create .txt files and name them based on their topic. In those .txt files you can use to store any information you want up to 7500 tokens. 
-assistant,That adds anonymity while preserving data. Is the function's proposed name memory_manager?
-user,I didn't create the function yet. We are brainstorming about how to achieve this.
-assistant,My apologies for the confusion. I meant a function implemented by you!
-user,"I haven't implemented it yet, it is 12:03 AM here."
-assistant,Apologies for inconveniencing. I shall patiently await your progress in the morning. Thank you for your work.
