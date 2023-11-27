@@ -1,8 +1,7 @@
 import os
 
 def create_file(file_name):
-    current_directory = os.getcwd()
-    folder_path = os.path.join(current_directory, "workspace")
+    folder_path = os.path.join(os.getcwd(), "workspace")
     file_path = os.path.join(folder_path, file_name)
     if os.path.exists(file_path):
         return "File already exists"
@@ -12,9 +11,8 @@ def create_file(file_name):
             return "File created"
         
 def create_idea(idea_name, content):
-    current_directory = os.getcwd()
-    folder_path = os.path.join(current_directory, "workspace")
-    folder_path = os.path.join(current_directory, "ideas")
+    folder_path = os.path.join(os.getcwd(), "workspace")
+    folder_path = os.path.join(folder_path, "ideas")
     file_name = idea_name + '.txt'
     file_path = os.path.join(folder_path, file_name )
     if os.path.exists(file_path):
@@ -26,9 +24,8 @@ def create_idea(idea_name, content):
             return "Idea created"    
 
 def load_idea(idea_name):
-    current_directory = os.getcwd()
-    folder_path = os.path.join(current_directory, "workspace")
-    folder_path = os.path.join(current_directory, "ideas")
+    folder_path = os.path.join(os.getcwd(), "workspace")
+    folder_path = os.path.join(folder_path, "ideas")
     file_name = idea_name + '.txt'
     file_path = os.path.join(folder_path, file_name )
     if os.path.exists(file_path):
@@ -39,9 +36,8 @@ def load_idea(idea_name):
         return "Idea not found" 
 
 def delete_idea(idea_name):
-    current_directory = os.getcwd()
-    folder_path = os.path.join(current_directory, "workspace")
-    folder_path = os.path.join(current_directory, "ideas")
+    folder_path = os.path.join(os.getcwd(), "workspace")
+    folder_path = os.path.join(folder_path, "ideas")
     file_name = idea_name + '.txt'
     file_path = os.path.join(folder_path, file_name )
     if os.path.exists(file_path):
@@ -51,9 +47,8 @@ def delete_idea(idea_name):
         return "Idea not found"    
 
 def list_ideas():
-    current_directory = os.getcwd()
-    folder_path = os.path.join(current_directory, "workspace")
-    folder_path = os.path.join(current_directory, "ideas")
+    folder_path = os.path.join(os.getcwd(), "workspace")
+    folder_path = os.path.join(folder_path, "ideas")
     if os.path.exists(folder_path):       
         return os.listdir()
     else:
