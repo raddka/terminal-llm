@@ -7,7 +7,7 @@ def create_file(file_name):
         return "File already exists"
     else:
         with open(file_path, 'w') as file:
-            file.write("#Created by Hermes")
+            file.write("#Created \n")
             return "File created"
         
 def create_idea(idea_name, content):
@@ -19,7 +19,7 @@ def create_idea(idea_name, content):
         return "Idea already exists"
     else:
         with open(file_path, 'w') as file:
-            file.write("### System: Idea Created by Hermes \n")
+            file.write("### System: Idea Created \n")
             file.write(content)
             return "Idea created"    
 
