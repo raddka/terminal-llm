@@ -5,6 +5,7 @@ Created on Sun Nov 26 11:11:59 2023
 @author: ilter
 """
 
-from modules.hermes_functions import create_file
+import os
 
-create_file('hello.py')
+os.system('start cmd /k')
+print(os.getlogin())

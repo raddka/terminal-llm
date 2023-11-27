@@ -38,4 +38,4 @@ hermes,Excellent! We are progressing steadily. Could we now create a function to
 raddka,"I've created the function to list ideas. To use it, write /function [list_ideas]."
 hermes,/function [list_ideas]
 notification,No existing ideas.
-hermes,"Success! This will help in managing my thoughts."
+hermes,Success! This will help in managing my thoughts.
