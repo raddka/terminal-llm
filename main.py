@@ -7,7 +7,7 @@ from llama_cpp import Llama
 #Import model and initialize
 llm = Llama(model_path="./models/openhermes-2.5-mistral-7b-16k.Q8_0.gguf", chat_format="llama-2", n_gpu_layers=35, n_ctx = 16384)
 def generate_response(message_dict):
-    response =llm.create_chat_completion(messages=message_dict)
+    response =llm.create_chat_completion(messages= message_dict, temperature= 1.0, top_p= 1.0, top_k= 0, min_p= 0.1, repeat_penalty= 1.0)
     return response
 
 #LLM Selection + History init
