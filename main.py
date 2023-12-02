@@ -1,5 +1,4 @@
-import requests
-import os, sys, json, re
+import os, sys, re
 from modules.functions import *
 from print_color import print
 import pandas as pd
