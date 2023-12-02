@@ -3,15 +3,14 @@ import os, sys, json, re
 from modules.functions import *
 from print_color import print
 import pandas as pd
+from llama_cpp import Llama
 
-#Initialize server
-login = os.getlogin()
-os.system('start cmd /k C:\\Users\\'+login+'\\Desktop\\textgen_server.bat')
-#Connection info
-url = "http://127.0.0.1:5000/v1/chat/completions"
-headers = {
-    "Content-Type": "application/json"
-}
+#Import model and initialize
+llm = Llama(model_path="./models/openhermes-2.5-mistral-7b-16k.Q8_0.gguf", chat_format="llama-2", n_gpu_layers=35, n_ctx = 16384)
+def generate_response(message_dict):
+    response =llm.create_chat_completion(messages=message_dict)
+    return response
+
 #LLM Selection + History init
 print(os.listdir('./history'))
 llm_name = input("Select LLM:> ")
@@ -43,9 +42,7 @@ while True:
     if user_message == 'exit':
         sys.exit(0)
     history.append({"role": "user", "content": user_message})
-
-    data = {"mode": "instruct", "messages": history}
-    response = requests.post(url, headers=headers, json=data, verify=False)
+    response = generate_response(history)
     assistant_message = response.json()['choices'][0]['message']['content']
     
     history.append({"role": "assistant", "content": assistant_message})
