@@ -68,11 +68,11 @@ while True:
             else:
                 response = 'Function not found'        
         
-        history.append({"role": "notification", "content": response})
-        data = {"mode": "instruct","messages": history}
-        response = requests.post(url, headers=headers, json=data, verify=False)
-        print(assistant_message, tag='Notification', tag_color='yellow', color='white')
+        history.append({"role": "system", "content": response})
+
+        response = generate_response(history)
         assistant_message = response.json()['choices'][0]['message']['content']
+        print(assistant_message, tag='System', tag_color='yellow', color='white')
         history.append({"role": "assistant", "content": assistant_message})
         history_update(history)  
         print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')
