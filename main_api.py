@@ -39,11 +39,12 @@ while True:
     if role_select == 'system':
         system_message = input('System:> ')
         history.append({"role": "system", "content": system_message})
-    if role_select == 'clear':
-        history = []    
-    user_message = input("Raddka:> ")
+      
+    user_message = input("User:> ")
     if user_message == 'exit':
         sys.exit(0)
+    if role_select == 'clear':
+        history = []  
     history.append({"role": "user", "content": user_message})
     assistant_message = response_generator(history)
     

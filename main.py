@@ -35,11 +35,12 @@ while True:
     role_select = input("Select role - system/user :> ")
     if role_select == 'system':
         system_message = input('System:> ')
-        history.append({"role": "system", "content": system_message})
-    
-    user_message = input("Raddka:> ")
+        history.append({"role": "system", "content": system_message})  
+    user_message = input("User:> ")
     if user_message == 'exit':
-        sys.exit(0)
+        sys.exit(0)    
+    if role_select == 'clear':
+        history = []  
     history.append({"role": "user", "content": user_message})
     response = generate_response(history)
     assistant_message = response.json()['choices'][0]['message']['content']
