@@ -1,5 +1,5 @@
 # terminal-llm
-Trying to create simple LLM interface to lower the barrier entry to this stuff.
+Trying to create simple LLM interface to lower the entry barrier to this stuff.
 
 ## How to use?
 - **Step 1**- Clone this junk.
