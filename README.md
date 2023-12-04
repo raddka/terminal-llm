@@ -1,5 +1,5 @@
-# Jarvo
-Jarvo is more cringe than Jarvis.
+# terminal-llm
+Trying to create simple LLM interface to lower the barrier entry to this stuff.
 
 ## How to use?
 - **Step 1**- Clone this junk.
