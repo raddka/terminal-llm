@@ -8,7 +8,9 @@ from llama_cpp.llama_types import ChatCompletionMessage
 
 #Import model and initialize
 model_name = model_selector()
-llm = Llama(model_path="./models/"+model_name, chat_format="llama-2", n_gpu_layers=-1, n_ctx = 16384)
+n_gpu, n_context = llama_args()
+
+llm = Llama(model_path="./models/" + model_name, chat_format="llama-2", n_gpu_layers=n_gpu, n_ctx = n_context)
 
 #LLM Selection + History init
 llm_name = char_selector()
