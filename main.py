@@ -51,5 +51,5 @@ while True:
                 repeat_penalty=llm_config["repeat_penalty"])  
     assistant_message= output["choices"][0]["text"]
 
-    history, history_dict = history_update_print(llm_name,'assistant', history, history_dict, system_message)
+    history, history_dict = history_update_print(llm_name,'assistant', history, history_dict, assistant_message)
     print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')

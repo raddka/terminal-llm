@@ -38,8 +38,8 @@ def char_selector():
 
     files = [file for file in os.listdir(os.getcwd() + folder_path) if file.endswith(extension)]
     if not files:
-        print(f"No {extension} chars found in the folder.")
-        return
+        choice_new = input("Provide a name for the new Char:")
+        return choice_new
 
     print("Available chars:")
     for i, file in enumerate(files, start=1):
@@ -69,21 +69,19 @@ def promp_generator(content):
     prompt = content +  '<|im_start|>assistant \n'
     return prompt
 
-def prompt_saver(history, output):
-    history_new = history +  '<|im_start|>assistant \n' + output + '<|im_end|> \n'
-    return history_new
-
 def history_update(role, conversation, conversation_dict, content):
     conversation += prompter(role, content)
     conversation_dict.append({"role": role, "content": content})
+    print(conversation, conversation_dict)
     return conversation, conversation_dict
 
 def history_update_print(file_name, role, conversation, conversation_dict, content):
-    conversation += prompt_saver(role, content)
-    conversation_dict = conversation_dict.append({"role": role, "content": content})
+    conversation += prompter(role, content)
+    conversation_dict.append({"role": role, "content": content})
+    keys = conversation_dict[0].keys()
     history_path = os.path.join("history", f'history_{file_name}.csv')
     with open(history_path, 'w', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=['role', 'content'])
+        writer = csv.DictWriter(file, keys)
         writer.writeheader()
         writer.writerows(conversation_dict)
     return conversation, conversation_dict
