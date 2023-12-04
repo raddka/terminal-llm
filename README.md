@@ -8,10 +8,10 @@ Trying to create simple LLM interface to lower the barrier entry to this stuff.
 
 - **Step 3**- Place GGUF file in your models folder.
 
-- **Step 4**- Update Line 8 of main.py to your model and inference settings.
+- **Step 4**- Update *llm_config.json* to your personal liking.
 
-- **Step 5**- Update Line 10 of main.py to your personal liking.
+- **Step 5**- Get the stuff in *requirements.txt*. You don't need *openai* if you won't use APIs.
 
-- **Step 6**- Try to run main.py until import errors are not there because I don't like to create requirements.txt.
+- **Step 6**- Run a terminal/command window in the folder, type **python main.py**.
 
 - **Step 7**- Have fun.

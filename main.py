@@ -1,5 +1,4 @@
 import os, sys, json, csv
-from modules.functions import *
 from modules.helpers import *
 from print_color import print
 from llama_cpp import Llama
