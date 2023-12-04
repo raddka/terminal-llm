@@ -1,52 +1,50 @@
 import os, sys, re
 from modules.functions import *
+from modules.helpers import *
 from print_color import print
 import pandas as pd
 from llama_cpp import Llama
+from llama_cpp.llama_types import ChatCompletionMessage
 
 #Import model and initialize
-llm = Llama(model_path="./models/openhermes-2.5-mistral-7b-16k.Q8_0.gguf", chat_format="llama-2", n_gpu_layers=35, n_ctx = 16384)
-def generate_response(message_dict):
-    response =llm.create_chat_completion(messages= message_dict, temperature= 1.0, top_p= 1.0, top_k= 0, min_p= 0.1, repeat_penalty= 1.0)
-    return response
+model_name = model_selector()
+llm = Llama(model_path="./models/"+model_name, chat_format="llama-2", n_gpu_layers=-1, n_ctx = 16384)
 
 #LLM Selection + History init
-print(os.listdir('./history'))
-llm_name = input("Select LLM:> ")
-if llm_name == 'exit':
-        sys.exit(0)
-history = []
+llm_name = char_selector()
+
 #Load existing history
 try:
     history_df = pd.read_csv('.\history\history_' + llm_name + '.csv')
     history_dict = history_df.to_dict(orient='records')
-    history = history + history_dict
-    for key in history:
-        print(history[key], tag=key, tag_color='magenta', color='cyan')
+    for key in history_dict:
+        history = ''
+        history = history + prompter(key, history_dict[key])
+        history_dict = []
+        history_dict = history_dict + pd.read_csv('.\history\history_' + llm_name + '.csv').to_dict(orient='records')        
 except:
-    pass
-
-def history_update(list_name):
-    df = pd.DataFrame(list_name, columns=['role','content'])
-    df.to_csv('.\history\history_' + llm_name + '.csv', index=False)
+    history = ''
+    history_dict = []
 
 #Chat
 while True:
     role_select = input("Select role - system/user :> ")
     if role_select == 'system':
         system_message = input('System:> ')
-        history.append({"role": "system", "content": system_message})  
+        history = history + prompter('system', system_message)
+        history_dict.append({"role": "system", "content": system_message})
     user_message = input("User:> ")
     if user_message == 'exit':
         sys.exit(0)    
     if role_select == 'clear':
         history = []  
-    history.append({"role": "user", "content": user_message})
-    response = generate_response(history)
-    assistant_message = response.json()['choices'][0]['message']['content']
-    
-    history.append({"role": "assistant", "content": assistant_message})
-    history_update(history)
+    history = history + prompter('user', user_message)
+    history_dict.append({"role": "user", "content": user_message})
+    output = llm(prompt=promp_generator(history), max_tokens=1024, stop=["<|im_end|>"], temperature=1.0, top_p= 1.0, top_k= 0, min_p= 0.1, repeat_penalty= 1.0)
+    assistant_message = output["choices"][0]["text"]
+    history = promp_saver(history, assistant_message)
+    history_dict.append({"role": "assistant", "content": assistant_message})
+    history_update(llm_name, history_dict)
     print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')
         
     if '/function' in assistant_message:
@@ -68,11 +66,15 @@ while True:
             else:
                 response = 'Function not found'        
         
-        history.append({"role": "system", "content": response})
+        history = history + prompter('system', response)
+        history_dict.append({"role": "system", "content": response})
 
-        response = generate_response(history)
-        assistant_message = response.json()['choices'][0]['message']['content']
+        output = llm(prompt=promp_generator(history), max_tokens=1024, stop=["<|im_end|>"], temperature=1.0, top_p= 1.0, top_k= 0, min_p= 0.1, repeat_penalty= 1.0)
+        assistant_message = response['choices'][0]['message']['content']
         print(assistant_message, tag='System', tag_color='yellow', color='white')
-        history.append({"role": "assistant", "content": assistant_message})
-        history_update(history)  
+        assistant_message = output["choices"][0]["text"]
+
+        history = promp_saver(history, assistant_message)
+        history_dict.append({"role": "assistant", "content": assistant_message})
+        history_update(llm_name, history_dict)
         print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')
