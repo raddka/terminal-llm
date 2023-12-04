@@ -1,9 +1,8 @@
 #For the future.
-import os
-import pandas as  pd
+import os, csv
 
 def model_selector():
-    folder_path = "\models"  # Change this to your folder path
+    folder_path = "\models"
     extension = ".gguf"
     files = [file for file in os.listdir(os.getcwd() + folder_path) if file.endswith(extension)]
     if not files:
@@ -70,10 +69,21 @@ def promp_generator(content):
     prompt = content +  '<|im_start|>assistant \n'
     return prompt
 
-def promp_saver(history, output):
+def prompt_saver(history, output):
     history_new = history +  '<|im_start|>assistant \n' + output + '<|im_end|> \n'
     return history_new
 
-def history_update(llm_name:str, conversation):
-    df = pd.DataFrame(conversation, columns=['role','content'])
-    df.to_csv('.\history\history_' + llm_name + '.csv', index=False)
+def history_update(role, conversation, conversation_dict, content):
+    conversation += prompter(role, content)
+    conversation_dict.append({"role": role, "content": content})
+    return conversation, conversation_dict
+
+def history_update_print(file_name, role, conversation, conversation_dict, content):
+    conversation += prompt_saver(role, content)
+    conversation_dict = conversation_dict.append({"role": role, "content": content})
+    history_path = os.path.join("history", f'history_{file_name}.csv')
+    with open(history_path, 'w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=['role', 'content'])
+        writer.writeheader()
+        writer.writerows(conversation_dict)
+    return conversation, conversation_dict
