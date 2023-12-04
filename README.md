@@ -2,6 +2,7 @@
 Trying to create simple LLM interface to lower the entry barrier to this stuff.
 
 TODO ELI5 LLMs and Local LLMs.
+TODO Add tinygrad and support FP16 versions.
 
 ## How to use?
 - **Step 1**- Clone this repo.
