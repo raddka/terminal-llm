@@ -3,19 +3,35 @@
 import os, sys, re
 #from modules.functions import *
 from print_color import print
-import pandas as pd
-from llama_cpp import Llama
-from llama_cpp.llama_types import ChatCompletionMessage
 from modules.helpers import *
 
-def get_user_input_for_variables(var1_default=5, var2_default=8):
-    var1 = input(f"Do you want to change var1? - Default is [{var1_default}] (press Enter to use default): ") or var1_default
-    var2 = input(f"Do you want to change var2? - Default is [{var2_default}] (press Enter to use default): ") or var2_default
-    
-    return var1, var2
+def model_selector():
+    folder_path = "models"
+    extension = ".gguf"
+    gguf_files = [file for file in os.listdir(os.path.join(os.getcwd(),folder_path)) if file.endswith(extension)]
+    folders = [f for f in os.listdir(os.path.join(os.getcwd(), folder_path)) if os.path.isdir(os.path.join(folder_path, f))]
+    files = folders + gguf_files
+    if not files:
+        print(f"No models found in the folder.")
+        return
 
-# Example usage
-var1, var2 = get_user_input_for_variables()
+    print("Available models:")
+    for i, file in enumerate(files, start=1):
+        print(f"[{i}] {file}")
+    selected_file = None
 
-# Now you can use var1 and var2 in your function
-print(f"var1: {var1}, var2: {var2}")
+    try:
+        choice = int(input("Enter the number of the model you want to select: "))
+        if 1 <= choice <= len(files):
+            selected_file = files[choice - 1]
+        else:
+            print("Invalid choice. Please enter a valid number.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+
+    if selected_file is not None:
+        print(f"You selected: {selected_file}")
+    return selected_file
+
+file_name = model_selector()
+print(file_name)
