@@ -72,7 +72,6 @@ def promp_generator(content):
 def history_update(role, conversation, conversation_dict, content):
     conversation += prompter(role, content)
     conversation_dict.append({"role": role, "content": content})
-    print(conversation, conversation_dict)
     return conversation, conversation_dict
 
 def history_update_print(file_name, role, conversation, conversation_dict, content):
