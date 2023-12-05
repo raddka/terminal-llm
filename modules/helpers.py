@@ -1,5 +1,6 @@
 #For the future.
-import os, csv
+import os, csv, sys
+sys.path.append(os.getcwd())
 
 def model_selector():
     folder_path = "models"
