@@ -2,20 +2,17 @@
 import os, csv
 
 def model_selector():
-    folder_path = "models"
+    folder_path = "\models"
     extension = ".gguf"
-    gguf_files = [file for file in os.listdir(os.path.join(os.getcwd(),folder_path)) if file.endswith(extension)]
-    folders = [f for f in os.listdir(os.path.join(os.getcwd(), folder_path)) if os.path.isdir(os.path.join(folder_path, f))]
-    files = folders + gguf_files
+    files = [file for file in os.listdir(os.getcwd() + folder_path) if file.endswith(extension)]
     if not files:
-        print(f"No models found in the folder.")
+        print(f"No {extension} models found in the folder.")
         return
 
     print("Available models:")
     for i, file in enumerate(files, start=1):
         print(f"[{i}] {file}")
-    selected_file = None
-
+    
     try:
         choice = int(input("Enter the number of the model you want to select: "))
         if 1 <= choice <= len(files):
@@ -25,8 +22,7 @@ def model_selector():
     except ValueError:
         print("Invalid input. Please enter a number.")
 
-    if selected_file is not None:
-        print(f"You selected: {selected_file}")
+    print(f"You selected: {selected_file}")
     return selected_file
 
 def llama_args(n_gpu_layers_default=-1, n_ctx_default=16386):
