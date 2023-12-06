@@ -4,7 +4,6 @@ from modules.helpers import *
 from print_color import print
 from openai import OpenAI
 from os import getenv
-sys.path.append(os.getcwd())
 
 # gets API Key from environment variable OPENAI_API_KEY
 client = OpenAI(base_url="https://openrouter.ai/api/v1",api_key=getenv("OPENROUTER_API_KEY"),)
