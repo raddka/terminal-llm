@@ -6,7 +6,7 @@ TODO ELI5 LLMs and Local LLMs.
 ## How to use?
 - **Step 1**- Clone this repo.
 
-- **Step 2**- Place GGUF file in your models folder or put your model folder in the models folder. Do not put username's folder.
+- **Step 2**- Place GGUF file in your models folder.
 
 - **Step 3**- Update *llm_config.json* to your personal liking.
 
