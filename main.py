@@ -6,8 +6,9 @@ from llama_cpp import Llama
 #Import model and initialize
 model_name = model_selector()
 n_gpu, n_context = llama_args()
+model_dir  = os.getcwd() + os.path.sep + 'models' + os.path.sep
 
-llm = Llama(model_path=model_name, chat_format="llama-2", n_gpu_layers=n_gpu, n_ctx = n_context)
+llm = Llama(model_path= model_dir + model_name, chat_format="llama-2", n_gpu_layers=n_gpu, n_ctx = n_context)
 
 #LLM Selection + History init
 llm_name = char_selector()
@@ -33,12 +34,12 @@ while True:
     role_select = input("Select role - system/user :> ")
     if role_select == 'system':
         system_message = input('System:> ')
-        history, history_dict = history_update('system', history, history_dict, system_message)
+        history, history_dict = history_update_print('system', history, history_dict, system_message)
     
     user_message = input("User:> ")
     if user_message == 'exit':
         sys.exit(0)  
-    history, history_dict = history_update('user', history, history_dict, user_message)
+    history, history_dict = history_update_print('user', history, history_dict, user_message)
 
     output = llm(prompt=promp_generator(history),
                 max_tokens=llm_config["max_tokens"],
@@ -50,5 +51,5 @@ while True:
                 repeat_penalty=llm_config["repeat_penalty"])  
     assistant_message= output["choices"][0]["text"]
 
-    history, history_dict = history_update_print(llm_name,'assistant', history, history_dict, assistant_message)
+    history, history_dict = history_update_print('assistant', history, history_dict, assistant_message, True, llm_name)
     print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')

@@ -33,15 +33,15 @@ while True:
     role_select = input("Select role - system/user :> ")
     if role_select == 'system':
         system_message = input('System:> ')
-        history, history_dict = history_update('system', history, history_dict, system_message)
+        history, history_dict = history_update_print('system', history, history_dict, system_message)
     
     user_message = input("User:> ")
     if user_message == 'exit':
         sys.exit(0)  
-    history, history_dict = history_update('user', history, history_dict, user_message)
+    history, history_dict = history_update_print('user', history, history_dict, user_message)
 
     assistant_message = response_generator(history)
-    history, history_dict = history_update_print(llm_name,'assistant', history, history_dict, assistant_message)
+    history, history_dict = history_update_print('assistant', history, history_dict, assistant_message, True, llm_name)
     print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')
         
     if '/function' in assistant_message:
@@ -62,9 +62,9 @@ while True:
                 response = func_to_call()
             else:
                 response = 'Function not found'                
-        history, history_dict = history_update('system', history, history_dict, system_message)
+        history, history_dict = history_update_print('system', history, history_dict, system_message)
         print(response, tag='System', tag_color='yellow', color='white')
 
         assistant_message = response_generator(history)        
-        history, history_dict = history_update_print(llm_name,'assistant', history, history_dict, system_message)
+        history, history_dict = history_update_print('assistant', history, history_dict, assistant_message, True, llm_name)
         print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')

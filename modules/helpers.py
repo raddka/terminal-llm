@@ -1,11 +1,12 @@
 #For the future.
 import os, csv
-from glob import glob
+BASE_DIR = os.getcwd()
 
 def model_selector():
     folder_path = os.path.sep + "models"
     extension = ".gguf"
-    if not (files := glob(os.getcwd() + folder_path + "/*.gguf")):
+    files = [file for file in os.listdir(BASE_DIR + folder_path) if file.endswith(extension)]
+    if not files:
         print(f"No {extension} models found in the folder.")
         return
 
@@ -36,13 +37,13 @@ def char_selector():
     extension = ".csv"
     shared_string = "history_"
 
-    files = [file for file in os.listdir(os.getcwd() + folder_path) if file.endswith(extension)]
+    files = [file for file in os.listdir(BASE_DIR + folder_path) if file.endswith(extension)]
     if not files:
         choice_new = input("Provide a name for the new Char:")
         return choice_new
 
     print("Available chars:")
-    for i, file in enumerate(files, start=1):
+    for i, file in enumerate(files, 1):
         display_name = file.replace(shared_string, "").replace(extension, "")
         print(f"[{i}] {display_name}")
 
@@ -60,7 +61,6 @@ def char_selector():
         print(f"You've created: {choice}")
         return choice
 
-
 def prompter(role, content):
     message = '<|im_start|>'+ role +' \n' + content + '<|im_end|> \n'
     return message
@@ -69,18 +69,14 @@ def promp_generator(content):
     prompt = content +  '<|im_start|>assistant \n'
     return prompt
 
-def history_update(role, conversation, conversation_dict, content):
+def history_update_print(role, conversation, conversation_dict, content, print_history=False, file_name=None):
     conversation += prompter(role, content)
     conversation_dict.append({"role": role, "content": content})
-    return conversation, conversation_dict
-
-def history_update_print(file_name, role, conversation, conversation_dict, content):
-    conversation += prompter(role, content)
-    conversation_dict.append({"role": role, "content": content})
-    keys = conversation_dict[0].keys()
-    history_path = os.path.join("history", f'history_{file_name}.csv')
-    with open(history_path, 'w', newline='') as file:
-        writer = csv.DictWriter(file, keys)
-        writer.writeheader()
-        writer.writerows(conversation_dict)
+    if print_history:
+        keys = conversation_dict[0].keys()
+        history_path = os.path.join("history", f'history_{file_name}.csv')
+        with open(history_path, 'w', newline='') as file:
+            writer = csv.DictWriter(file, keys)
+            writer.writeheader()
+            writer.writerows(conversation_dict)
     return conversation, conversation_dict
