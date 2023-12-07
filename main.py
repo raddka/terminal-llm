@@ -7,7 +7,7 @@ from llama_cpp import Llama
 model_name = model_selector()
 n_gpu, n_context = llama_args()
 
-llm = Llama(model_path="./models/" + model_name, chat_format="llama-2", n_gpu_layers=n_gpu, n_ctx = n_context)
+llm = Llama(model_path=model_name, chat_format="llama-2", n_gpu_layers=n_gpu, n_ctx = n_context)
 
 #LLM Selection + History init
 llm_name = char_selector()

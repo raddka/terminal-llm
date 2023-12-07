@@ -1,16 +1,16 @@
 #For the future.
 import os, csv
+from glob import glob
 
 def model_selector():
-    folder_path = "\models"
+    folder_path = os.path.sep + "models"
     extension = ".gguf"
-    files = [file for file in os.listdir(os.getcwd() + folder_path) if file.endswith(extension)]
-    if not files:
+    if not (files := glob(os.getcwd() + folder_path + "/*.gguf")):
         print(f"No {extension} models found in the folder.")
         return
 
     print("Available models:")
-    for i, file in enumerate(files, start=1):
+    for i, file in enumerate(files, 1):
         print(f"[{i}] {file}")
     
     try:
