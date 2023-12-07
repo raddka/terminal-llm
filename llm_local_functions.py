@@ -34,12 +34,12 @@ while True:
     role_select = input("Select role - system/user :> ")
     if role_select == 'system':
         system_message = input('System:> ')
-        history, history_dict = history_update('system', history, history_dict, system_message)
+        history, history_dict = history_update_print('assistant', history, history_dict, assistant_message)
     
     user_message = input("User:> ")
     if user_message == 'exit':
         sys.exit(0)  
-    history, history_dict = history_update('user', history, history_dict, user_message)
+    history, history_dict = history_update_print('assistant', history, history_dict, assistant_message)
 
     output = llm(prompt=promp_generator(history),
                 max_tokens=llm_config["max_tokens"],
@@ -51,7 +51,7 @@ while True:
                 repeat_penalty=llm_config["repeat_penalty"])     
     assistant_message= output["choices"][0]["text"]
 
-    history, history_dict = history_update_print(llm_name,'assistant', history, history_dict, system_message)
+    history, history_dict = history_update_print('assistant', history, history_dict, assistant_message, True, llm_name)
     print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')
         
     if '/function' in assistant_message:
@@ -73,7 +73,7 @@ while True:
             else:
                 response = 'Function not found'        
         
-        history, history_dict = history_update('system', history, history_dict, system_message)
+        history, history_dict = history_update_print('assistant', history, history_dict, assistant_message)
         print(response, tag='System', tag_color='yellow', color='white')
 
         output = llm(prompt=promp_generator(history),
@@ -86,5 +86,5 @@ while True:
                 repeat_penalty=llm_config["repeat_penalty"])  
         assistant_message= output["choices"][0]["text"]
         
-        history, history_dict = history_update_print(llm_name,'assistant', history, history_dict, system_message)
+        history, history_dict = history_update_print('assistant', history, history_dict, assistant_message, True, llm_name)
         print(assistant_message, tag=llm_name, tag_color='magenta', color='cyan')
