@@ -2,15 +2,6 @@ import os, sys, json, csv
 from modules.helpers import *
 from print_color import print
 from llama_cpp import Llama
-import openai
-
-# gets API Key from environment variable OPENAI_API_KEY
-openai.api_base = 'https://192.168.123.206:1234/v1'
-openai.api_key = ''
-
-def api_lmm(messages):
-    completion = openai.ChatCompletion.create(model="local-model", messages= messages)
-    return completion.choices[0].message
 
 #Import model and initialize
 model_name = model_selector()
